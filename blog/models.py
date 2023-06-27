@@ -37,7 +37,13 @@ class Member(models.Model):
         verbose_name_plural = "مقاله ها "
 
     
-
+class Settings(models.Model):
+    title= models.CharField(max_length=255, verbose_name=_("عنوان سایت "), help_text="عنوان سایت در قسمت navbar")
+    class Meta:
+        verbose_name = "عنوان سایت"
+        verbose_name_plural = "عنوان سایت"
+    def __str__(self):
+        return self.title
 
 
 

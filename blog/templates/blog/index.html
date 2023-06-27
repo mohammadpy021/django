@@ -1,5 +1,5 @@
 {% extends 'blog/base.html' %}
-
+{% load jformat %}
 
 {% block header %}
 <header class="masthead" style="background-image: url('/static/blog/assets/img/home-bg.jpg')">
@@ -30,7 +30,14 @@
                         <p class="post-meta">
                             Posted by
                             <a href="#!">Mohammad</a>
-                            {{article.created_at}}
+                            {{article.created_at|jformat:"%Y/%m/%d"}}
+                            {% comment %} TODO: we can put condition if update_Time> Created time {% endcomment %}
+                        </p>
+                        <p class="post-tags">
+                            {% for cat in article.category.all %}
+                            <a href="#"> {{cat}}#  </a>
+                           
+                            {% endfor %}
                         </p>
                     </div>
 

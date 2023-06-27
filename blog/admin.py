@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from .models import Member, Category
+from .models import Member, Category, Settings
 
 class Category_Admin(admin.ModelAdmin):
    
@@ -30,3 +30,7 @@ class Admin(admin.ModelAdmin):
     get_categories.short_description = "دسته بندی ها"
 
 admin.site.register(Member, Admin)
+
+
+
+admin.site.register(Settings)
