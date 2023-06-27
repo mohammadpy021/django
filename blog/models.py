@@ -25,7 +25,7 @@ class Member(models.Model):
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
     description = models.TextField(blank=True, null=True, verbose_name=_("توضیحات"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
-    category = models.ManyToManyField(Category, verbose_name="دسته بندی ها ")
+    category = models.ManyToManyField(Category, verbose_name="دسته بندی ها", related_name='members')
     # created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
     # updated_at = models.DateTimeField(auto_now=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
@@ -36,7 +36,8 @@ class Member(models.Model):
         verbose_name = "مقاله"
         verbose_name_plural = "مقاله ها "
 
-    
+
+
 class Settings(models.Model):
     title= models.CharField(max_length=255, verbose_name=_("عنوان سایت "), help_text="عنوان سایت در قسمت navbar")
     class Meta:
@@ -44,10 +45,3 @@ class Settings(models.Model):
         verbose_name_plural = "عنوان سایت"
     def __str__(self):
         return self.title
-
-
-
-
-
-
-    

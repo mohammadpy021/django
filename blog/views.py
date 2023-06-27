@@ -8,22 +8,7 @@ def index(request):
     
 
 def members(request):
-    # context = {
-    #     "articles": [
-    #         {"title":"this is first",
-    #         "description":"this is first description"
-    #         },
-    #         {"title":"this is 2",
-    #         "description":"this is 2 description"
-    #         },
-    #         {"title":"this is 3",
-    #         "description":"this is 3 description"
-    #         },
-    #         {"title":"this is 4",
-    #         "description":"this is 4 description"
-    #         },
-    #     ]
-    # }
+   
     # context = {"articles": Member.objects.all()}
     context = {"articles": Member.objects.filter(status= "P").order_by("-created_at"),
     }
@@ -38,3 +23,11 @@ def detail(request, slug):
     # template = loader.get_template("detail.html")
     # return HttpResponse(template.render(context, request))
     return render(request, "blog/post.html", context) 
+
+
+def category(request):
+
+    context = {"category":Category.objects.all(),
+    } 
+
+    return render(request, "blog/category.html", context) 

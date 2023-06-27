@@ -18,7 +18,7 @@ class Category_Admin(admin.ModelAdmin):
 admin.site.register(Category, Category_Admin)
 class Admin(admin.ModelAdmin):
    
-    list_display = ['title', 'status', 'get_categories']
+    list_display = ['title', 'status','slug',  'get_categories']
     list_filter = ["status", "created_at"]
     search_fields = ["title", "description", ]
     prepopulated_fields = {"slug": ("title",)}
