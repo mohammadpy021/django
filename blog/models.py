@@ -4,8 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from django_jalali.db import models as jmodels
 from extensions.utils import jalali_convertor
 
-
+class ArticleManager(models.Manager):
+    def published(self):
+        return self.filter(status='P')
+    def active(self):
+        return self.filter(status=True)
 class Category(models.Model):
+    parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, blank = True, null=True, verbose_name=" زیردسته", help_text="subcategory")
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
     position = models.IntegerField(verbose_name=_("پوزیشن"), default=1) 
@@ -13,9 +18,10 @@ class Category(models.Model):
     class Meta:
         verbose_name = "دسته‌بندی"
         verbose_name_plural = "دسته بندی ها"
+        ordering = ["parent__id", "position"]
     def __str__(self):
         return self.title
-    
+    objects = ArticleManager()
 
 class Member(models.Model):
     STATUS = [
@@ -25,7 +31,7 @@ class Member(models.Model):
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
     description = models.TextField(blank=True, null=True, verbose_name=_("توضیحات"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
-    category = models.ManyToManyField(Category, verbose_name="دسته بندی ها", related_name='members')
+    category = models.ManyToManyField(Category, verbose_name="دسته بندی ها", related_name='articles')
     # created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
     # updated_at = models.DateTimeField(auto_now=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
@@ -35,6 +41,9 @@ class Member(models.Model):
     class Meta:
         verbose_name = "مقاله"
         verbose_name_plural = "مقاله ها "
+    def __str__(self):
+        return self.title
+    objects = ArticleManager()
 
 
 

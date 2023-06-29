@@ -4,11 +4,11 @@ from .models import Member, Category, Settings
 
 class Category_Admin(admin.ModelAdmin):
    
-    list_display = ['title', 'status', 'position']
+    list_display = ['position', 'title', 'slug', 'parent', 'status' ]
     list_filter = ["status"]
     search_fields = ["title" ]
     prepopulated_fields = {"slug": ("title",)}
-    ordering = ["position"]
+    # ordering = ["parent", "position"] we can use ordeing either here or in modles in class  Meta:
     #  list_filter = [
     #     ("status", admin.BooleanFieldListFilter),
     # ]
@@ -26,7 +26,7 @@ class Admin(admin.ModelAdmin):
     #     ("status", admin.BooleanFieldListFilter),
     # ]
     def get_categories(self, obj):
-        return  ",".join([i.title for i in obj.category.all()])
+        return  ",".join([i.title for i in obj.category.filter(status=True)])
     get_categories.short_description = "دسته بندی ها"
 
 admin.site.register(Member, Admin)

@@ -1,3 +1,14 @@
+{% comment %} templatetags/base_tags.py {% endcomment %}
+
 {% for category in categories %}
-                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">{{category.title}}</a></li>
-                       {% endfor %}
+
+     {% if   not category.parent %}
+          <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'blog:category' category.slug %}">{{category.title}}</a></li>
+           
+          {% include 'blog/partial/subnavbar.html' %}
+
+     {% endif %}
+
+
+
+{% endfor %}
