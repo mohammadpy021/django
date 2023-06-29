@@ -3,10 +3,10 @@
 {% for category in categories %}
 
      {% if   not category.parent %}
-          <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'blog:category' category.slug %}">{{category.title}}</a></li>
+          <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"  href="{% url 'blog:category' category.slug %}">{{category.title}}</a>
            
           {% include 'blog/partial/subnavbar.html' %}
-
+     </li>
      {% endif %}
 
 
