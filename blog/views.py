@@ -4,23 +4,31 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import Member, Category
 from django.core.paginator import Paginator
+from django.views.generic.list import ListView
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
 
-def members(request):
+# def members(request):
    
-    # context = {"articles": Member.objects.all()}
-    # context = {"articles": Member.objects.filter(status= "P").order_by("-created_at"),
-    article_list = Member.objects.published().order_by("-created_at")
-    paginator = Paginator(article_list, 2)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-    context = { "articles": page_obj ,
-    }
-    # template = loader.get_template("index.html")
-    # return HttpResponse(template.render(context, request))
-    return render(request, "blog/index.html", context)
+    
+    
+#     article_list = Member.objects.published().order_by("-created_at")
+#     paginator = Paginator(article_list, 2)
+#     page_number = request.GET.get("page")
+#     page_obj = paginator.get_page(page_number)
+#     context = { "articles": page_obj ,
+#     }
+
+#     return render(request, "blog/index.html", context)
+class ArticleListView(ListView):
+    # model = Member
+    queryset = Member.objects.published()
+    paginate_by = 3 
+    # template_name = "blog/index.html"
+    # context_object_name = "articles"
+
+
 
 def detail(request, slug):
     # context = {"article":Member.objects.get(slug= slug)}
