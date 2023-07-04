@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from django_jalali.db import models as jmodels
 from extensions.utils import jalali_convertor
-
+from django.contrib.auth.models import User
 class ArticleManager(models.Manager):
     def published(self):
         return self.filter(status='P')
@@ -29,9 +29,11 @@ class Member(models.Model):
         ("D", "پیش نویس"),
     ]
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
+
     description = models.TextField(blank=True, null=True, verbose_name=_("توضیحات"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
     category = models.ManyToManyField(Category, verbose_name="دسته بندی ها", related_name='articles')
+    author = models.ForeignKey(User, verbose_name="نویسنده", on_delete=models.CASCADE, null=True, related_name='articles')
     # created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
     # updated_at = models.DateTimeField(auto_now=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
@@ -44,6 +46,7 @@ class Member(models.Model):
     def __str__(self):
         return self.title
     objects = ArticleManager()
+
 
 
 

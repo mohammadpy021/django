@@ -1,0 +1,76 @@
+{% extends 'blog/base.html' %}
+{% load jformat %}
+{% load static %}
+{% block header %}
+<header class="masthead" style="background-image: url({% static 'blog/assets/img/home-bg.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+
+        {% block main_content %}
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                  
+                 
+                    <!-- Post preview-->
+                    
+                    {% comment %} {% for category in categories %} {% endcomment %}
+                    {% comment %} category.articles.all%  -> this will get unPublished(draft) post.{% endcomment %}
+                    {% comment %} {%for article in categories.articles.published%} {% endcomment %}
+                    {%for article in object_list%}
+              
+                    <div class="post-preview">
+                        <a href="{% url 'blog:detail' article.slug %}">
+                            <h2 class="post-title"> {{article.title}} </h2>
+                        </a>
+                        <p class="post-subtitle">{{article.description|truncatewords:50}}</p>
+                        <p class="post-meta">
+                            Posted by
+                           {% comment %}  Author {% endcomment %}
+                            <a href="{% url 'blog:author' article.author.username %}">{{article.author}}</a>
+                            {{article.created_at|jformat:"%Y/%m/%d"}}
+                            {% comment %} TODO: we can put condition if update_Time> Created time {% endcomment %}
+                        
+                        </p>
+                        <p class="post-tags">
+                            {% for cat in article.category.active %}
+                            <a href="{% url 'blog:category' cat.slug %}"> {{cat}}#  </a>
+                            {% endfor %}
+                        </p>
+                    </div>
+
+                    {% endfor %}
+
+                    {% comment %} {% endfor %} {% endcomment %}
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <!-- Pager-->
+                    <div class="d-flex  justify-content-end mb-4">
+                        
+
+                        {%if page_obj.has_previous%}
+                        <a class="me-2" href="?page={{page_obj.previous_page_number}}">previous</a>
+                        {% endif %}
+                       <p> page {{page_obj.number}} of {{page_obj.paginator.num_pages }} </p>
+                       
+                        {%if page_obj.has_next%}
+                        <a class="me-2" href="?page={{page_obj.next_page_number}}">next  </a>
+                        <a class="me-2" href="?page={{page_obj.paginator.num_pages}}"> Last:{{page_obj.paginator.num_pages}}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% endblock main_content %}
+      
