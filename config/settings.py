@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_jalali',
     
    'blog',
+       'widget_tweaks',
    
     
 ]
