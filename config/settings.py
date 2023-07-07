@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_jalali',
     
    'blog',
+   'accounts',
        'widget_tweaks',
    
     
@@ -147,5 +148,5 @@ LOGIN_URL = 'accounts:login'
 
 #Crispy
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
+#Custom permissions
+AUTH_USER_MODEL = "accounts.User"

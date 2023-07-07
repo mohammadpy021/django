@@ -3,7 +3,8 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from django_jalali.db import models as jmodels
 from extensions.utils import jalali_convertor
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from accounts.models import User
 from django.urls import reverse
 
 class ArticleManager(models.Manager):
@@ -34,7 +35,7 @@ class Member(models.Model):
 
     description = models.TextField(blank=True, null=True, verbose_name=_("توضیحات"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
-    category = models.ManyToManyField(Category, verbose_name="دسته بندی ها", related_name='articles')
+    category = models.ManyToManyField(Category,null=True, verbose_name="دسته بندی ها", related_name='articles')
     author = models.ForeignKey(User, verbose_name="نویسنده", on_delete=models.CASCADE, null=True, related_name='articles')
     # created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
     # updated_at = models.DateTimeField(auto_now=True)
