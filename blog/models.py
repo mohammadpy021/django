@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from django_jalali.db import models as jmodels
 from extensions.utils import jalali_convertor
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 class ArticleManager(models.Manager):
     def published(self):
         return self.filter(status='P')
@@ -45,7 +47,12 @@ class Member(models.Model):
         verbose_name_plural = "مقاله ها "
     def __str__(self):
         return self.title
+    def get_categories(self):
+        return  ",".join([i.title for i in self.category.filter(status=True)])
+    get_categories.short_description = "دسته بندی ها"
     objects = ArticleManager()
+    def get_absolute_url(self): # new
+        return reverse('accounts:home')
 
 
 

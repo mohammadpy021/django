@@ -63,9 +63,9 @@ class Admin(admin.ModelAdmin):
     #  list_filter = [
     #     ("status", admin.BooleanFieldListFilter),
     # ]
-    def get_categories(self, obj):
-        return  ",".join([i.title for i in obj.category.filter(status=True)])
-    get_categories.short_description = "دسته بندی ها"
+    # def get_categories(self, obj):
+    #     return  ",".join([i.title for i in obj.category.filter(status=True)])
+    # get_categories.short_description = "دسته بندی ها"
     def thumbnail(self, obj):
         return format_html('<img src="{}" style="width: 130px; \
         height: 100px;border-radius: 10px;"/>'.format(obj.photo.url))

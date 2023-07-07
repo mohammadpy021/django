@@ -1,5 +1,5 @@
 from django.contrib.auth import views
-from .views import HomeList
+from .views import HomeList, ArticleCreate
 from django.urls import path
 
 
@@ -36,5 +36,6 @@ urlpatterns = [
 urlpatterns += [
 
     path("", HomeList.as_view(), name="home"),
+    path("create/", ArticleCreate.as_view(), name="article-create"),
 
 ]

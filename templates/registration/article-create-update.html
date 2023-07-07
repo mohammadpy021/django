@@ -1,0 +1,47 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{%block main%}
+<form method="post" enctype= "multipart/form-data" >{% csrf_token %}
+    
+
+
+
+
+    <div class="row">
+            <div class="col-6">
+    {{ form.title|as_crispy_field }}
+    
+              </div>
+        <div class="col-6">
+            {{ form.slug|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class="col-12">
+        {{ form.description|as_crispy_field }}
+    </div>
+    <div class="row">
+        <div class="col-6">
+        {{ form.category|as_crispy_field }}
+        </div>
+        <div class="col-6">
+            {{ form.photo|as_crispy_field }}
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+        {{ form.author|as_crispy_field }}
+        </div>
+        <div class="col-6">
+            {{ form.status|as_crispy_field }}
+            </div>
+    </div>
+
+
+    {% comment %} {{ form|crispy }} {% endcomment %}
+    <input type="submit" value="ذخیره">
+</form>
+
+{% endblock %}

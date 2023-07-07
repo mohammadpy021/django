@@ -78,11 +78,12 @@
 						</span>
 						
                         
-                      {% endif %}
+                   
 						<span class="focus-input100" data-placeholder="گذرواژه"></span>
                         {{ form.password|add_class:"input100" }}
                         {% if form.password.errors %}
                         {{ form.password.errors }}
+						{% endif %}
 					</div>
 
 					<div class="container-login100-form-btn">
