@@ -3,7 +3,7 @@
 
 
 {%block main%}
-<form method="post" enctype= "multipart/form-data" >{% csrf_token %}
+<form method="post" enctype= "multipart/form-data"  >{% csrf_token %}
     
 
 
@@ -28,16 +28,20 @@
         </div>
         <div class="col-6">
             {{ form.photo|as_crispy_field }}
-            </div>
+        </div>
     </div>
+    {% if  user.is_superuser %}
     <div class="row">
+       
         <div class="col-6">
         {{ form.author|as_crispy_field}}
         </div>
         <div class="col-6">
             {{ form.status|as_crispy_field }}
             </div>
+            
     </div>
+    {% endif %}
 
 
     {% comment %} {{ form|crispy }} {% endcomment %}

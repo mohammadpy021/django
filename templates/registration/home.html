@@ -45,10 +45,15 @@
                 {% for article in object_list %}
                 
               <tr>
-               
-           
-
-                    <td>{{article.title}}</td>
+                    <td>
+                    {% if request.user.is_superuser or article.status == "D" %}
+                        <a href="{% url 'accounts:article-update' article.pk %}">
+                          {{article.title}}
+                        </a>
+                      {% else %}
+                      {{article.title}}
+                        {% endif %}
+                    </td>
                     <td><img width=100 src="{{article.photo.url}}" /></td>
                     <td>{{article.get_categories}}</td>
                     <td>{{article.description|truncatewords:20|striptags}}</td>

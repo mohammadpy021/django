@@ -7,7 +7,7 @@ register = template.Library()
 
 @register.simple_tag()
 def title():
-    name =  Settings.objects.all().first() if Settings.objects.all()[0] else "سایت جنگو"
+    name =  Settings.objects.all().first() if Settings.objects.all() else "سایت جنگو"
     
     return name
 
