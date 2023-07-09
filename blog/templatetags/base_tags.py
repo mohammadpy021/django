@@ -8,7 +8,6 @@ register = template.Library()
 @register.simple_tag()
 def title():
     name =  Settings.objects.all().first() if Settings.objects.all() else "سایت جنگو"
-    
     return name
 
 
@@ -18,4 +17,12 @@ def navbar():
         "categories": Category.objects.filter(status= True)
     }
 
+@register.inclusion_tag("registration/partial/link.html")
+def link(request, link_name, content):
+    return {
+        "request": request,
+        "link_name": link_name,
+        "link" : f"accounts:{link_name}",
+        "content": content,
+    }
 

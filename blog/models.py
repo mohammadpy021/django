@@ -28,8 +28,11 @@ class Category(models.Model):
 
 class Member(models.Model):
     STATUS = [
-        ("P", "انتشار"),
-        ("D", "پیش نویس"),
+        ("P", "انتشار"),         # publish
+        ("D", "پیش نویس"),       # draft
+        ("I", "درحال بررسی"),    # investigate
+        ("B", "برگشت داده‌شده"),  # back
+
     ]
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
 

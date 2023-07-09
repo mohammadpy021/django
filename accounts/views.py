@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from blog.models import Member
 from django.urls import reverse
-from .mixins import FormValidMixin, FieldMixin, UpdateMixin, DeleteMixin
+from .mixins import FormValidMixin, FieldMixin, AccessMixin, DeleteMixin
 
 
 
@@ -26,7 +26,7 @@ class ArticleCreate(LoginRequiredMixin,FieldMixin, FormValidMixin, CreateView):
     #     return reverse('accounts:home')
 
 
-class ArticleUpdate(LoginRequiredMixin, UpdateMixin, FieldMixin, FormValidMixin, UpdateView):
+class ArticleUpdate(LoginRequiredMixin, AccessMixin, FieldMixin, FormValidMixin, UpdateView):
     template_name = "registration/article-create-update.html"
     model = Member
 class ArticleDelete(DeleteMixin, DeleteView):

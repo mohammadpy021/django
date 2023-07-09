@@ -30,25 +30,24 @@ class FormValidMixin(object):
             self.obj = form.save(commit=False)
             self.obj.author = self.request.user
             self.obj.status = "D"
-            self.obj.save() 
+            self.obj.save()
         return super().form_valid(form)
 
 
 
-class UpdateMixin(object):
+class AccessMixin(object):
     def dispatch(self, request,pk, *args, **kwargs):
         articles = get_object_or_404(Member, pk=pk)
-        # if  request.user.is_superuser or (articles.status == "D" and articles.author == request.user) :
-        if  request.user.is_superuser or articles.author == request.user :
+        if  request.user.is_superuser or (articles.status in ["D", "B"] and articles.author == request.user) :
             return super().dispatch(request, *args, **kwargs)
         else:
-            raise Http404("این پست متعلق به شما نمیباشد")
-            
+            raise Http404("شما اجازه دسترسی به این صفحه را ندارید")
+
 
 class DeleteMixin(object):
     def dispatch(self, request,pk, *args, **kwargs):
         articles = get_object_or_404(Member, pk=pk)
-        if  request.user.is_superuser or (articles.status == "D" and articles.author == request.user) :
+        if  request.user.is_superuser or (articles.status in ["D", "B"] and articles.author == request.user) :
             return super().dispatch(request, *args, **kwargs)
         else:
             raise Http404("شما دسترسی به این صفحه را ندارید")

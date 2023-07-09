@@ -6,6 +6,7 @@ from .models import Member, Category, User
 from django.core.paginator import Paginator
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from accounts.mixins import AccessMixin
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
@@ -43,9 +44,13 @@ class ArticleDeatil(DetailView):
     # context_object_name = "article"
     def get_object(self):
         self.slug = self.kwargs["slug"]
-        # return get_object_or_404(Member, slug=self.slug, status="P")
-        return Member.objects.get(slug= self.slug)
-
+        return get_object_or_404(Member, slug=self.slug, status="P")
+        # return Member.objects.get(slug= self.slug)
+#show the post with status = Draft(D)
+class ArticlePreview(AccessMixin, DetailView):
+    def get_object(self):
+        self.pk = self.kwargs["pk"]
+        return Member.objects.get(pk= self.pk)
 # def category(request, slug):
 #     categories = get_object_or_404(Category, status=True, slug = slug)
 #     category_post = categories.articles.published()

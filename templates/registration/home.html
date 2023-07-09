@@ -42,11 +42,16 @@
               </tr>
             </thead>
             <tbody>
+     
+             
+                
+                {% if user.pk == object_list.0.author.pk %}TRUE{% endif %}
                 {% for article in object_list %}
                 
+               
               <tr>
                     <td>
-                    {% if request.user.is_superuser or article.status == "D" %}
+                    {% if request.user.is_superuser or article.status in "DB"|make_list %}
                         <a href="{% url 'accounts:article-update' article.pk %}">
                           {{article.title}}
                         </a>
@@ -67,15 +72,37 @@
                                 نمایش مقاله
                             </a>
 
-                        {% else %}
+
+                        {%elif article.status == 'B' %}
+                        <span class="badge badge-warning">
+                          برگشت داده شده
+                      </span>
+                      <a class="badge badge-secondary" href={% url 'blog:preview' article.pk %} target="_blank">
+                        پیش‌نمایش
+                    </a>
+
+
+                        {% elif article.status == 'D' %}
                         <span class="badge badge-danger">
                             پیش‌نویس
                         </span>
+                        <a class="badge badge-secondary" href={% url 'blog:preview' article.pk %} target="_blank">
+                          پیش‌نمایش
+                      </a>
+
+
+                      {% else %}
+
+                      <span class="badge badge-info">
+                        در حال بررسی
+                    </span>
+
+
                         {% endif %}
 
 
-                        {% if request.user.is_superuser or article.status == "D" %}
-                      <br>
+                        {% if request.user.is_superuser or article.status in "DB"|make_list %}
+                            <br>
                           <a class="badge badge-danger" href="{% url 'accounts:article-delete' article.pk%} ">
                             حذف
                           </a>
