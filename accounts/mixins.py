@@ -44,3 +44,11 @@ class UpdateMixin(object):
         else:
             raise Http404("این پست متعلق به شما نمیباشد")
             
+
+class DeleteMixin(object):
+    def dispatch(self, request,pk, *args, **kwargs):
+        articles = get_object_or_404(Member, pk=pk)
+        if  request.user.is_superuser or (articles.status == "D" and articles.author == request.user) :
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise Http404("شما دسترسی به این صفحه را ندارید")

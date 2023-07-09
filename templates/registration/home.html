@@ -72,8 +72,17 @@
                             پیش‌نویس
                         </span>
                         {% endif %}
-                   </td>
 
+
+                        {% if request.user.is_superuser or article.status == "D" %}
+                      <br>
+                          <a class="badge badge-danger" href="{% url 'accounts:article-delete' article.pk%} ">
+                            حذف
+                          </a>
+                      
+                          {% endif %}
+                    
+                   </td>
 
                    
                    
