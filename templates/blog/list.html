@@ -33,7 +33,7 @@
                         <a href="{% url 'blog:detail' article.slug %}">
                             <h2 class="post-title"> {{article.title}} </h2>
                         </a>
-                        <p class="post-subtitle">{{article.description|truncatewords:50}}</p>
+                        <p class="post-subtitle">{{article.description|striptags|truncatewords:50}}</p>
                         <p class="post-meta">
                             Posted by
                            {% comment %}  Author {% endcomment %}

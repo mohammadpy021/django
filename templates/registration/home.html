@@ -36,6 +36,7 @@
                 <th>categories</th>
                 <th>description</th>
                 <th>author</th>
+                <th>پست‌ویژه</th>
                 <th>status</th>
 
 
@@ -63,6 +64,14 @@
                     <td>{{article.get_categories}}</td>
                     <td>{{article.description|truncatewords:20|striptags}}</td>
                     <td>{% firstof article.author.get_full_name article.author.get_username  %}</td>
+                    <td>
+                      {%if article.is_special%}
+                      <li class="fa fa-check-circle" style="color:green"></li>
+                      {% else %}
+                      <li class="fa fa-minus-circle" style="color:red"></li>
+                      {%endif%}
+
+                    </td>
                    <td>
                         {% if article.status == 'P' %}
                         <span class="badge badge-success">

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 from django_jalali.db import models as jmodels
 from django.utils import timezone
@@ -12,3 +13,6 @@ class User(AbstractUser):
         return False
     is_special_user.boolean = True
     is_special_user.short_description ="وضعیت‌کاربر ویژه"
+    # def get_absolute_url(self):
+    #     return reverse("accounts:home")
+    

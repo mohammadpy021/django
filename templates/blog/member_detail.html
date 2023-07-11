@@ -14,11 +14,11 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="post-heading">
                     <h1>{{object.title}}</h1>
-                    <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+                    
                     <span class="meta">
-                        Posted by
-                        <a href="#!">Mohammad</a>
-                        {{object.created_at}}
+                        نویسنده:
+                        <a href="{% url 'blog:author' object.author %}">{% firstof  object.author.get_full_name object.author  %}</a>
+                        {{object.created_at|date:'Y/m/d'}}
                     </span>
                 </div>
             </div>
@@ -34,7 +34,15 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
+                        {% if object.is_special %}
+                            {% if user.is_authenticated and user.is_special_user or user.is_superuser or user.pk == object.author.pk %}
+                                {{object.description|safe}}
+                            {% else %}
+                                 <p>  این پست مخصوص کاربران ویژه است  میتوانید از <a href="#">اینجا ثبت نام</a> کنید</p>
+                            {% endif %}
+                        {% else %}
                         {{object.description|safe}}
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -18,11 +18,12 @@ def navbar():
     }
 
 @register.inclusion_tag("registration/partial/link.html")
-def link(request, link_name, content):
+def link(request, link_name, content, classes):
     return {
         "request": request,
         "link_name": link_name,
         "link" : f"accounts:{link_name}",
         "content": content,
+        "classes" : classes
     }
 

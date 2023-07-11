@@ -1,4 +1,5 @@
 
+{% comment %} blog/templatetag/basetags.py {% endcomment %}
 <li class="nav-item">
 <a href="{% url link %}" class="nav-link 
 
@@ -6,7 +7,7 @@
     active
     {% endif %}
 ">
-    <i class="far fa-circle nav-icon "></i>
+    <i class="far {{classes}} nav-icon "></i>
     <p>{{content}}</p>
 </a>
 </li>

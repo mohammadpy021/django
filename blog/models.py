@@ -46,6 +46,7 @@ class Member(models.Model):
     updated_at = jmodels.jDateTimeField(auto_now=True)
     status = models.CharField(max_length=1, choices=STATUS, verbose_name=_("وضعیت"))
     photo = models.ImageField(upload_to="photo/", verbose_name=_("تصاویر"))
+    is_special = models.BooleanField(default=False, verbose_name= "مقاله ویژه" )
     class Meta:
         verbose_name = "مقاله"
         verbose_name_plural = "مقاله ها "

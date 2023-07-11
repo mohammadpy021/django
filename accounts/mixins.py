@@ -11,15 +11,17 @@ class FieldMixin(object):
                     "category",
                     "author",
                     "status",
+                    "is_special",
                     "photo",]
         elif request.user.is_author:
             self.fields= ["title",
                     "description",
                     "slug",
                     "category",
+                    "is_special",
                     "photo",]
         else:
-            raise Http404("you must be logged in")
+            raise Http404("شما یک نویسنده نیستید")
 
 
         return super().dispatch(request, *args, **kwargs)
