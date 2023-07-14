@@ -8,7 +8,13 @@
 
 
 {% block main %}
-
+{% if messages %}
+<div class="alert alert-success">
+    {% for m in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m }}</li>
+    {% endfor %}
+</div>
+{% endif %}
 <div class="row">
     <div class="col-12">
       <div class="card">
@@ -31,22 +37,18 @@
             <thead>
               <tr>
 
-                <th>title</th>
-                <th>photo</th>
-                <th>categories</th>
-                <th>description</th>
-                <th>author</th>
+                <th>عنوان</th>
+                <th>عکس</th>
+                <th>دسته‌بندی</th>
+                <th>توضیحات</th>
+                <th>نویسنده</th>
                 <th>پست‌ویژه</th>
-                <th>status</th>
+                <th>وضعیت</th>
 
 
               </tr>
             </thead>
             <tbody>
-     
-             
-                
-                {% if user.pk == object_list.0.author.pk %}TRUE{% endif %}
                 {% for article in object_list %}
                 
                

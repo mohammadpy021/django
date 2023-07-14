@@ -38,7 +38,8 @@
                             {% if user.is_authenticated and user.is_special_user or user.is_superuser or user.pk == object.author.pk %}
                                 {{object.description|safe}}
                             {% else %}
-                                 <p>  این پست مخصوص کاربران ویژه است  میتوانید از <a href="#">اینجا ثبت نام</a> کنید</p>
+                            {{object.description|striptags|truncatewords:30}}
+                                 <p class="badge bg-warning">  این پست مخصوص کاربران ویژه است  میتوانید از <a href="#">اینجا ثبت نام</a> کنید</p>
                             {% endif %}
                         {% else %}
                         {{object.description|safe}}

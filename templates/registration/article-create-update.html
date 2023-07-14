@@ -3,6 +3,8 @@
 
 
 {%block main%}
+
+
 <form method="post" enctype= "multipart/form-data"  >{% csrf_token %}
     
 
@@ -11,7 +13,7 @@
 
     <div class="row">
             <div class="col-6">
-    {{ form.title|as_crispy_field }}
+             {{ form.title|as_crispy_field }}
     
               </div>
         <div class="col-6">
@@ -24,27 +26,46 @@
     </div>
     <div class="row">
         <div class="col-6">
-        {{ form.category|as_crispy_field }}
+             {{ form.category|as_crispy_field }}
         </div>
         <div class="col-6">
             {{ form.photo|as_crispy_field }}
+
+            {{ form.is_special|as_crispy_field }}
+    
         </div>
     </div>
     {% if  user.is_superuser %}
     <div class="row">
        
         <div class="col-6">
-        {{ form.author|as_crispy_field}}
-        {{ form.is_special|as_crispy_field }}
+            {{ form.author|as_crispy_field}}
         </div>
+
         <div class="col-6">
             {{ form.status|as_crispy_field }}
             
-            </div>
+        </div>
             
     </div>
-    {% endif %}
+    {% else %}
+    <div class="col-6">
+        <div id="div_id_status" class="form-group">
+           <label for="id_status" class=" requiredField">
+               وضعیت<span class="asteriskField">*</span>
+           </label>
+           <div>
+              <select name="status" class="select form-control" required="" id="id_status">
+                 <option value="" selected="">---------</option>
+                 <option value="D">پیش نویس</option>
+                 <option value="I"> ارسال برای بررسی</option>
+              
+              </select>
+           </div>
+        </div>
+    </div>
 
+    {% endif %}
 
     {% comment %} {{ form|crispy }} {% endcomment %}
     <input type="submit" value="ذخیره">

@@ -31,8 +31,8 @@
        
         {{ form.is_author|as_crispy_field }}
     </div>
-    
-    <input type="submit" value="ذخیره">
+    <input class="btn bg-success" type="submit" value="ذخیره">
+    <a class="btn bg-danger" href="{% url 'accounts:password_change' %}">تغییر گذرواژه</a>
 </form>
 
 {% endblock %}
