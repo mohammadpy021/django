@@ -2,7 +2,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView
 from blog.models import Member
 from .models import User
 from .mixins import FormValidMixin, FieldMixin, AccessMixin, DeleteMixin, AuthorsAccess
@@ -63,8 +63,9 @@ class Login(LoginView):
         else:
             return reverse("accounts:home")
 
-class PasswordChange(PasswordChangeView):
-    success_url = reverse_lazy("accounts:password_change_done")
+
+
+
 
         
 

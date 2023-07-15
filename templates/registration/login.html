@@ -52,7 +52,7 @@
 
 
 			<div class="wrap-login100">
-				<form method="post" action="{% url 'accounts:login' %}" class="login100-form validate-form">
+				<form method="post" action="{% url 'login' %}" class="login100-form validate-form">
                     {% csrf_token %}
 					<span class="login100-form-title p-b-26">
 						Welcome
@@ -86,7 +86,7 @@
 						{% endif %}
 					</div>
 
-					<div class="container-login100-form-btn">
+					<div class="my-3 container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button class="login100-form-btn">
@@ -94,6 +94,10 @@
                             </button>
 						</div>
 					</div>
+<a class="mx-5" href ="{% url 'password_reset' %}" >
+	<span>رمز عبور خودرا فراموش کرده اید؟
+	</span>
+</a>
 
 					{% comment %} <div class="text-center p-t-115">
 						<span class="txt1">

@@ -144,10 +144,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #auth
 LOGIN_REDIRECT_URL = 'accounts:home'
-LOGIN_URL = 'accounts:login'
-LOGOUT_REDIRECT_URL = 'accounts:login'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
 
 #Crispy
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #Custom permissions
 AUTH_USER_MODEL = "accounts.User"
+#Email
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

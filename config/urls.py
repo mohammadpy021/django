@@ -18,10 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static  # new
 from django.conf import settings  # new
+from accounts.views import Login
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("blog.urls")),
+    path("", include("django.contrib.auth.urls")),#Login, Logout,...
     path("accounts/", include("accounts.urls")),
+    path("login/", Login.as_view(redirect_authenticated_user=True), name="login"),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
