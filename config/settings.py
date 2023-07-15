@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+g1_d0yfgyv@5^o3yl9gqpo^m+%l^u#9*4h+qb@76ewvswnha!'
+SECRET_KEY=config('SECRET_KEY')#.env file
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -152,4 +153,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #Custom permissions
 AUTH_USER_MODEL = "accounts.User"
 #Email
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = config("EMAIL_USE_TLS") #.env file
+EMAIL_PORT = config("EMAIL_PORT")#.env file
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")#.env file
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")#.env file

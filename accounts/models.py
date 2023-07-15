@@ -9,9 +9,10 @@ class User(AbstractUser):
     is_author = models.BooleanField(default=False, verbose_name="وضعیت‌‌نویسندگی")
     special_user = jmodels.jDateTimeField(default=timezone.now, verbose_name="کاربر ویژه تا")
     def is_special_user(self):
-        if self.special_user > timezone.now():
+        if self.special_user > timezone.datetime.now():#timezone.now() will count base on day rather than minute
             return True
-        return False
+        else:
+            return False
     is_special_user.boolean = True
     is_special_user.short_description ="وضعیت‌کاربر ویژه"
     # def get_absolute_url(self):
