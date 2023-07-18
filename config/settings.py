@@ -40,13 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
         'crispy_forms',
         'crispy_bootstrap4',
-    
-
     'django_jalali',
-    
    'blog',
    'accounts',
-       'widget_tweaks',
+    'widget_tweaks',
+    'comment', #django comments dab
    
     
 ]

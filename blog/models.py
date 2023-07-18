@@ -6,7 +6,8 @@ from extensions.utils import jalali_convertor
 # from django.contrib.auth.models import User
 from accounts.models import User
 from django.urls import reverse
-
+from django.contrib.contenttypes.fields import GenericRelation #comments-dab
+from comment.models import Comment #comments-dab
 class ArticleManager(models.Manager):
     def published(self):
         return self.filter(status='P')
@@ -26,7 +27,7 @@ class Category(models.Model):
         return self.title
     objects = ArticleManager()
 
-class Member(models.Model):
+class Member(models.Model):# Articles
     STATUS = [
         ("P", "انتشار"),         # publish
         ("D", "پیش نویس"),       # draft
@@ -35,7 +36,6 @@ class Member(models.Model):
 
     ]
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
-
     description = models.TextField(blank=True, null=True, verbose_name=_("توضیحات"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
     category = models.ManyToManyField(Category,null=True, verbose_name="دسته بندی ها", related_name='articles')
@@ -47,6 +47,8 @@ class Member(models.Model):
     status = models.CharField(max_length=1, choices=STATUS, verbose_name=_("وضعیت"))
     photo = models.ImageField(upload_to="photo/", verbose_name=_("تصاویر"))
     is_special = models.BooleanField(default=False, verbose_name= "مقاله ویژه" )
+    comments = GenericRelation(Comment)
+    
     class Meta:
         verbose_name = "مقاله"
         verbose_name_plural = "مقاله ها "
@@ -58,8 +60,6 @@ class Member(models.Model):
     objects = ArticleManager()
     def get_absolute_url(self): # new
         return reverse('accounts:home')
-
-
 
 
 class Settings(models.Model):

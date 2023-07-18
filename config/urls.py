@@ -30,7 +30,7 @@ urlpatterns = [
     #Email comfirm
     path('activate/<uidb64>/<token>/',  activate, name='activate'),  
     path('register/',Register.as_view(), name="register" ),
-    # path('register_confirm/',Register_confirm.as_view(), name="register_confirm" ),
+    path('comment/', include('comment.urls')), #django-comments-dab
     
     
 ]
