@@ -6,10 +6,18 @@ from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordRes
 from blog.models import Member
 from .models import User
 from .mixins import FormValidMixin, FieldMixin, AccessMixin, DeleteMixin, AuthorsAccess
-from .forms import ProfileForm
+from .forms import ProfileForm, SignupForm
 from django.shortcuts import redirect
 from django.contrib.messages.views import SuccessMessageMixin
-
+#mail confirm
+from django.http import HttpResponse
+from django.contrib.auth import login, authenticate
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
 
 
 class HomeList(LoginRequiredMixin,AuthorsAccess, ListView):
@@ -62,6 +70,52 @@ class Login(LoginView):
             return reverse("accounts:profile")
         else:
             return reverse("accounts:home")
+
+
+
+
+
+class Register(CreateView):
+    template_name = "registration/signup.html"
+    form_class = SignupForm
+    # def get_success_url(self):
+    #     return reverse('register_confirm')
+    def form_valid(self, form):# if form.is_valid(): in non class base 
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
+        current_site = get_current_site(self.request)
+        mail_subject = 'اکانت خود را فعال کنید.'
+        message = render_to_string('registration/acctivate_account.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+            'token':account_activation_token.make_token(user),
+        })
+        to_email = form.cleaned_data.get('email')
+        email = EmailMessage(
+                    mail_subject, message, to=[to_email]
+        )
+        email.send()
+        return HttpResponse('<a href="/login" > لطفا ایمیل خود را تایید کنید تا ثبت نام شما کامل شود')
+
+
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        # login(request, user)#Auto login
+        # return redirect('home')
+        return HttpResponse('ایمیل شما تایید شد . اکنون میتوانید وارد شوید. <a href="/login" > ورود </a>')
+    else:
+        return HttpResponse('این لینک  فعال سازی منقضی شده است')
 
 
 

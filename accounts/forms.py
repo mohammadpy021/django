@@ -1,6 +1,7 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, EmailField
 from .models import User
-
+from django.contrib.auth.forms import UserCreationForm
+from django import forms  
 class ProfileForm(ModelForm):
     def __init__(self, *args, **kwargs):
         #start getting kwargs from views:61
@@ -21,4 +22,12 @@ class ProfileForm(ModelForm):
                 "special_user",
                 "email",
                 "is_author",]
+
+
+
+class SignupForm(UserCreationForm):
+    email = forms.EmailField(max_length=200, help_text='Required')
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
 

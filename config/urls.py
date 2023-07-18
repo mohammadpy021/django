@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static  # new
 from django.conf import settings  # new
-from accounts.views import Login
+from accounts.views import Login, Register, activate
 
 
 urlpatterns = [
@@ -27,6 +27,11 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),#Login, Logout,...
     path("accounts/", include("accounts.urls")),
     path("login/", Login.as_view(redirect_authenticated_user=True), name="login"),
+    #Email comfirm
+    path('activate/<uidb64>/<token>/',  activate, name='activate'),  
+    path('register/',Register.as_view(), name="register" ),
+    # path('register_confirm/',Register_confirm.as_view(), name="register_confirm" ),
+    
     
 ]
 

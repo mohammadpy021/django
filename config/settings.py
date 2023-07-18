@@ -153,8 +153,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #Custom permissions
 AUTH_USER_MODEL = "accounts.User"
 #Email
-# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = config("EMAIL_USE_TLS") #.env file
 EMAIL_PORT = config("EMAIL_PORT")#.env file

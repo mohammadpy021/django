@@ -1,5 +1,13 @@
 from django.contrib.auth import views
-from .views import HomeList, ArticleCreate, ArticleUpdate, ArticleDelete, Profile, Login
+from .views import (HomeList,
+                    ArticleCreate,
+                    ArticleUpdate,
+                    ArticleDelete,
+                    Profile,
+                    Login,
+                    activate,
+                    Register,
+ )
 from django.urls import path
 from django.urls import reverse_lazy
 
@@ -41,4 +49,5 @@ urlpatterns = [
     path("update/<int:pk>", ArticleUpdate.as_view(), name="article-update"),
     path("delete/<int:pk>", ArticleDelete.as_view(), name="article-delete"),
     path("profile/", Profile.as_view(), name="profile"),
+
 ]
