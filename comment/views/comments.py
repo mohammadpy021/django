@@ -10,8 +10,8 @@ from comment.mixins import CanCreateMixin, CanEditMixin, CanDeleteMixin
 from comment.responses import UTF8JsonResponse
 from comment.messages import EmailError
 from comment.views import CommentCreateMixin, BaseCommentView
-
-
+from django.core.mail import EmailMessage #Custom Email
+from django.urls import reverse #Custom Email
 class CreateComment(CanCreateMixin, CommentCreateMixin):
     comment = None
     email_service = None
@@ -42,6 +42,33 @@ class CreateComment(CanCreateMixin, CommentCreateMixin):
         )
         self.comment = self.perform_create(temp_comment, self.request)
         self.data = render_to_string(self.get_template_names(), self.get_context_data(), request=self.request)
+        # Custom Email 073
+        article = self.comment.content_object #content_object is GenericForeignKey field in the model/comments.py
+        author_email = article.author.email
+        user_email =  self.request.user.email #following commands are also correct #self.comment.user.email   #self.comment.email
+        parent_email = False
+        if self.comment.parent:
+            parent_email = self.comment.parent.email
+        if user_email != author_email :
+            email = EmailMessage(
+                        "ثبت دیدگاه جدید",
+                         f" برای مشاهده بر روی لینک زیر کلیک کنید{reverse('blog:detail', kwargs={'slug':article.slug})} \n دیدگاه جدیدی برای پست <<{article}>> ثبت شده است.",
+                          to=[author_email]
+            )
+            email.send()
+            email = EmailMessage(
+                        "دیدگاه شما ثبت شد",
+                         f" برای مشاهده بر روی لینک زیر کلیک کنید{reverse('blog:detail', kwargs={'slug':article.slug})} \n دیدگاه شما برای پست <<{article}>> ثبت شده است.",
+                          to=[user_email]
+            )
+            email.send()
+        if parent_email and parent_email != user_email:
+            email = EmailMessage(
+                        "پاسخ به دیدگاه شما",
+                        f" برای مشاهده بر روی لینک زیر کلیک کنید{reverse('blog:detail', kwargs={'slug':article.slug})} \n  پاسخ جدید برای پست <<{article}>> به دیدگاه شما داده شده است",
+                        to=[parent_email]
+            )
+            email.send()
         return UTF8JsonResponse(self.json())
 
     def form_invalid(self, form):
@@ -52,7 +79,6 @@ class CreateComment(CanCreateMixin, CommentCreateMixin):
 
 class UpdateComment(CanEditMixin, BaseCommentView):
     comment = None
-
     def get_object(self):
         self.comment = get_object_or_404(
             Comment.objects.select_related('user', 'flag', 'reaction'),
