@@ -27,11 +27,11 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),#Login, Logout,...
     path("accounts/", include("accounts.urls")),
     path("login/", Login.as_view(redirect_authenticated_user=True), name="login"),
-    #Email comfirm
-    path('activate/<uidb64>/<token>/',  activate, name='activate'),  
-    path('register/',Register.as_view(), name="register" ),
+ 
+    path('activate/<uidb64>/<token>/',  activate, name='activate'),     #Email comfirm
+    path('register/',Register.as_view(), name="register" ),#Email comfirm
     path('comment/', include('comment.urls')), #django-comments-dab
-    
+    path('ratings/', include('star_ratings.urls', namespace='ratings')), #django-star-rating
     
 ]
 

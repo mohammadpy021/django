@@ -11,5 +11,6 @@ urlpatterns = [
     path("category/<slug:slug>/", views.CategoryView.as_view(), name="category"),
     path("author/<slug:author>/", views.AuthorView.as_view(), name="author"),#url gets author name
     # path("category/<slug:slug>/page/<int:page>/", views.category, name="category"),
+    
 ] 
 

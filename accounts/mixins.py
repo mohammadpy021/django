@@ -27,6 +27,7 @@ class FormValidMixin(object):
             # form.instance.status = "D"
             # self.obj = form.save(commit=False)
             # self.obj.author = self.request.user
+            # if self.obj.status != "I":
             if  form.instance.status != "I":
                 form.instance.status = "D"
             # self.obj.status = "D"

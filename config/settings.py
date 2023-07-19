@@ -45,6 +45,7 @@ INSTALLED_APPS = [
    'accounts',
     'widget_tweaks',
     'comment', #django comments dab
+        'star_ratings',
    
     
 ]
@@ -158,3 +159,8 @@ EMAIL_USE_TLS = config("EMAIL_USE_TLS") #.env file
 EMAIL_PORT = config("EMAIL_PORT")#.env file
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")#.env file
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")#.env file
+
+#django-star-rating
+STAR_RATINGS_STAR_HEIGHT=15
+editable=True
+# STAR_RATINGS_ANONYMOUS = True

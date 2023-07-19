@@ -2,6 +2,7 @@
 {% load jformat %}
 {% load static %}
 {% block header %}
+{% load ratings %}
 <header class="masthead" style="background-image: url({% static 'blog/assets/img/home-bg.jpg' %})">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -39,14 +40,16 @@
                             </h2>
                            
                         </a>
-                        
+                        {% ratings article %}
                         <p class="post-subtitle">{{article.description|striptags|truncatewords:50}}</p>
                         <p class="post-meta">
                             Posted by
                            {% comment %}  Author {% endcomment %}
                             <a href="{% url 'blog:author' article.author.username %}">{{article.author}}</a>
                             {{article.created_at|jformat:"%Y/%m/%d"}}
+                           
                             {% comment %} TODO: we can put condition if update_Time> Created time {% endcomment %}
+                           
                         
                         </p>
                         <p class="post-tags">
@@ -54,6 +57,7 @@
                             <a href="{% url 'blog:category' cat.slug %}"> {{cat}}#  </a>
                             {% endfor %}
                         </p>
+                      
                     </div>
 
                     {% endfor %}
