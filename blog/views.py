@@ -44,7 +44,10 @@ class ArticleDeatil(DetailView):
     # context_object_name = "article"
     def get_object(self):
         self.slug = self.kwargs["slug"]
-        return get_object_or_404(Member, slug=self.slug, status="P")
+        article = get_object_or_404(Member, slug=self.slug, status="P")
+        if self.request.user.ip_address not in article.hits.all():
+            article.hits.add(self.request.user.ip_address)
+        return article
         # return Member.objects.get(slug= self.slug)
 #show the post with status = Draft(D)
 class ArticlePreview(AccessMixin, DetailView):

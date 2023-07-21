@@ -26,7 +26,10 @@ class Category(models.Model):
     def __str__(self):
         return self.title
     objects = ArticleManager()
-
+class IPAddress(models.Model):
+    ip_address = models.GenericIPAddressField(verbose_name = "آدرس آی پی " )
+    def __str__(self):
+        return self.ip_address
 class Member(models.Model):# Articles
     STATUS = [
         ("P", "انتشار"),         # publish
@@ -48,7 +51,7 @@ class Member(models.Model):# Articles
     photo = models.ImageField(upload_to="photo/", verbose_name=_("تصاویر"))
     is_special = models.BooleanField(default=False, verbose_name= "مقاله ویژه" )
     comments = GenericRelation(Comment)
-    
+    hits = models.ManyToManyField(IPAddress, blank=True, verbose_name="بازدید ها ", related_name='hits')
     class Meta:
         verbose_name = "مقاله"
         verbose_name_plural = "مقاله ها "

@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 from django.db import models
-from .models import Member, Category, Settings
+from .models import Member, Category, Settings, IPAddress
 from django.utils.html import format_html
 @admin.action(description="تغییر حالت به انتشار")
 def make_published(modeladmin, request, queryset):
@@ -76,5 +76,6 @@ class Admin(admin.ModelAdmin):
 
 
 admin.site.register(Member, Admin)
-admin.site.register(Settings)
+admin.site.register(IPAddress) 
+admin.site.register(Settings) 
 # admin.site.site_header  =  "سایت جنگو ما"  

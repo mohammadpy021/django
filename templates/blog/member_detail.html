@@ -18,6 +18,10 @@
                         {{object.created_at|date:'Y/m/d'}}
                         <br>
                         {% ratings object %}
+                        <br>
+                        <span> بازدید ها :‌ </span>
+                        {{object.hits.count}}‌
+                        
                     </span>
                 </div>
             </div>

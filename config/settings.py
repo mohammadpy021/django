@@ -45,7 +45,8 @@ INSTALLED_APPS = [
    'accounts',
     'widget_tweaks',
     'comment', #django comments dab
-        'star_ratings',
+        'star_ratings',#django-star-rating
+        'bootstrap5', 
    
     
 ]
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'blog.middleware.SaveIPAddressMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'

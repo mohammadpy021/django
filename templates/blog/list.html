@@ -57,6 +57,11 @@
                             <a href="{% url 'blog:category' cat.slug %}"> {{cat}}#  </a>
                             {% endfor %}
                         </p>
+                        {% if article.hits.count %}
+                            <span> بازدید ها :‌ </span>
+                            {{article.hits.count}}
+                        {% endif %}
+                        
                       
                     </div>
 
