@@ -52,7 +52,7 @@ class Profile(LoginRequiredMixin, UpdateView):
     model = User
     form_class = ProfileForm
     # fields = '__all__' #when i used this the form didn't save
-    # fields = ["..."]
+    # fields = ["username, firstname, ... "]
     success_url = reverse_lazy("accounts:home")
     def get_form_kwargs(self): #sending kwargs to the forms.py:61
         kwargs = super(Profile, self).get_form_kwargs()

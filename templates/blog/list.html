@@ -3,6 +3,7 @@
 {% load static %}
 {% block header %}
 {% load ratings %}
+
 <header class="masthead" style="background-image: url({% static 'blog/assets/img/home-bg.jpg' %})">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -57,10 +58,10 @@
                             <a href="{% url 'blog:category' cat.slug %}"> {{cat}}#  </a>
                             {% endfor %}
                         </p>
-                        {% if article.hits.count %}
+                      
                             <span> بازدید ها :‌ </span>
                             {{article.hits.count}}
-                        {% endif %}
+                     
                         
                       
                     </div>

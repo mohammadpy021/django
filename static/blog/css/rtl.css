@@ -47,3 +47,14 @@ body{
     margin-left:200px; /* this should be the same width as the parent list item */
     margin-top:-35px; /* aligns top of sub menu with top of list item */
     }
+
+    .popular_articles{
+        border: 1px solid #bfbfbf;
+        padding: 15px;
+        border-radius: 5px;
+       margin:0px 20px;
+        position: absolute;
+        left: 0px;
+       /* top:0; */
+        box-shadow: -5px 5px #d5d5d5;
+    }

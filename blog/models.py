@@ -41,7 +41,7 @@ class Member(models.Model):# Articles
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
     description = models.TextField(blank=True, null=True, verbose_name=_("توضیحات"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
-    category = models.ManyToManyField(Category,null=True, verbose_name="دسته بندی ها", related_name='articles')
+    category = models.ManyToManyField(Category, verbose_name="دسته بندی ها", related_name='articles')
     author = models.ForeignKey(User, verbose_name="نویسنده", on_delete=models.CASCADE, null=True, related_name='articles')
     # created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
     # updated_at = models.DateTimeField(auto_now=True)
@@ -51,7 +51,8 @@ class Member(models.Model):# Articles
     photo = models.ImageField(upload_to="photo/", verbose_name=_("تصاویر"))
     is_special = models.BooleanField(default=False, verbose_name= "مقاله ویژه" )
     comments = GenericRelation(Comment)
-    hits = models.ManyToManyField(IPAddress, blank=True, verbose_name="بازدید ها ", related_name='hits')
+    hits = models.ManyToManyField(IPAddress,through="ArticleHit", blank=True, verbose_name="بازدید ها ", related_name='hits')
+
     class Meta:
         verbose_name = "مقاله"
         verbose_name_plural = "مقاله ها "
@@ -72,3 +73,9 @@ class Settings(models.Model):
         verbose_name_plural = "عنوان سایت"
     def __str__(self):
         return self.title
+
+class ArticleHit(models.Model):
+    article = models.ForeignKey("Member", on_delete=models.CASCADE)
+    ip_address = models.ForeignKey("IPAddress", on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    

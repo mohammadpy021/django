@@ -7,6 +7,8 @@ from django.core.paginator import Paginator
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from accounts.mixins import AccessMixin
+from django.db.models import Count, Q
+from datetime import datetime , timedelta
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
@@ -26,8 +28,11 @@ def index(request):
 class ArticleListView(ListView):
     # model = Member
     queryset = Member.objects.published()
+    # querys = Member.objects.published()\
+    #     .annotate(count=Count('hits',filter=Q(articlehit__created__gt = last_month))).order_by('-count')[:5]
     paginate_by = 3 
-    # template_name = "blog/index.html"
+
+    # template_name = "blog/index.html" 
     # context_object_name = "articles"
 
 
