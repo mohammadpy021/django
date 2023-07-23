@@ -8,6 +8,16 @@ from accounts.models import User
 from django.urls import reverse
 from django.contrib.contenttypes.fields import GenericRelation #comments-dab
 from comment.models import Comment #comments-dab
+from star_ratings.models import UserRating , Rating , AbstractBaseRating
+
+
+
+class MyRating(AbstractBaseRating):
+    # published = models.ManyToManyField(UserRating, null=True, related_name='pub') 
+    published = jmodels.jDateTimeField(auto_now_add=True, null= True)
+
+
+
 class ArticleManager(models.Manager):
     def published(self):
         return self.filter(status='P')
@@ -52,7 +62,8 @@ class Member(models.Model):# Articles
     is_special = models.BooleanField(default=False, verbose_name= "مقاله ویژه" )
     comments = GenericRelation(Comment)
     hits = models.ManyToManyField(IPAddress,through="ArticleHit", blank=True, verbose_name="بازدید ها ", related_name='hits')
-
+    ratings = GenericRelation(MyRating)
+    # ratings = GenericRelation(UserRating)
     class Meta:
         verbose_name = "مقاله"
         verbose_name_plural = "مقاله ها "
@@ -64,7 +75,6 @@ class Member(models.Model):# Articles
     objects = ArticleManager()
     def get_absolute_url(self): # new
         return reverse('accounts:home')
-
 
 class Settings(models.Model):
     title= models.CharField(max_length=255, verbose_name=_("عنوان سایت "), help_text="عنوان سایت در قسمت navbar")
@@ -78,4 +88,10 @@ class ArticleHit(models.Model):
     article = models.ForeignKey("Member", on_delete=models.CASCADE)
     ip_address = models.ForeignKey("IPAddress", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    
+
+
+
+
+
+
+

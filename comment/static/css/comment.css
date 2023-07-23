@@ -182,3 +182,7 @@ input#search-input:focus::placeholder {
 .three-dots-dropdown > li:hover {
     background: #f1f1f1;
 }
+/* custom */
+.col-md-10{
+    width: 70%;
+}

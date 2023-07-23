@@ -57,7 +57,11 @@
         
         {% endblock header %}
         <!-- Main Content-->
-        {%popular_articles%}
+        <div class="sidebar_parent">
+            {%popular_articles%}
+            {%hot_articles%}
+            {%stars_articles%}
+        </div>
         {% block main_content %}{% endblock main_content %}
        
         {% block post_content %}{% endblock post_content %}

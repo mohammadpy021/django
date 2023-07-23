@@ -1,6 +1,6 @@
 <div class="popular_articles">
-    <h2 >مقاله های پربازدید ماه </h2>
-    {% for article in popular_articles %}
+    <h2 >{{title}}</h2>
+    {% for article in articles %}
         <div>
             <a  href= "{% url 'blog:detail' article.slug %}" >
                 {{article.title}}

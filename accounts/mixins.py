@@ -58,3 +58,4 @@ class DeleteMixin(object):
             return super().dispatch(request, *args, **kwargs)
         else:
             raise Http404("شما دسترسی به این صفحه را ندارید")
+

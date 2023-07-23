@@ -52,9 +52,13 @@ body{
         border: 1px solid #bfbfbf;
         padding: 15px;
         border-radius: 5px;
-       margin:0px 20px;
+       margin:20px 20px;
+        
+        box-shadow: -5px 5px #d5d5d5;
+    }
+    .sidebar_parent{
         position: absolute;
         left: 0px;
        /* top:0; */
-        box-shadow: -5px 5px #d5d5d5;
+
     }

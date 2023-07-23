@@ -24,10 +24,9 @@ from accounts.views import Login, Register, activate
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("blog.urls")),
+    path("login/", Login.as_view(redirect_authenticated_user=True), name="login"),#this must be upper than the line below
     path("", include("django.contrib.auth.urls")),#Login, Logout,...
     path("accounts/", include("accounts.urls")),
-    path("login/", Login.as_view(redirect_authenticated_user=True), name="login"),
- 
     path('activate/<uidb64>/<token>/',  activate, name='activate'),     #Email comfirm
     path('register/',Register.as_view(), name="register" ),#Email comfirm
     path('comment/', include('comment.urls')), #django-comments-dab

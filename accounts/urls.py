@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 
 app_name = "accounts"
 # urlpatterns = [
-#     # path("login/", Login.as_view(redirect_authenticated_user=True), name="login"),
+    # path("login/", Login.as_view(redirect_authenticated_user=True), name="login"),
 #     path("logout/", views.LogoutView.as_view(), name="logout"),
 #     path(
 #         "password_change/", PasswordChange.as_view(), name="password_change"

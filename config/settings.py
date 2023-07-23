@@ -163,6 +163,8 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")#.env file
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")#.env file
 
 #django-star-rating
+STAR_RATINGS_RATING_MODEL = 'blog.MyRating' #custom model
 STAR_RATINGS_STAR_HEIGHT=15
 editable=True
 # STAR_RATINGS_ANONYMOUS = True
+
