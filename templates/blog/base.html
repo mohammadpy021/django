@@ -44,6 +44,10 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'blog:members' %}">Home</a></li>
 {%navbar%}
 
+<form class="form-inline mt-3" action="{% url 'blog:search' %}">
+    <input type="text" name="q" class="form-control" palceholder="جستجو">
+    <button class="btn btn-success" style="padding:8px; border-radius:5px;margin-right:5px">جستجو</button>
+</form>
 
 
 

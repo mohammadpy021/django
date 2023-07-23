@@ -59,7 +59,7 @@ class Profile(LoginRequiredMixin, UpdateView):
         kwargs['user'] = self.request.user
         # kwargs.update({'user': self.request.user})
         return kwargs
-    def get_object(self):
+    def get_object(self):#in this case we dont need to write the pk in the urls
         return User.objects.get(pk=self.request.user.pk)
 
 

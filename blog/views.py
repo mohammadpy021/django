@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from accounts.mixins import AccessMixin
-from django.db.models import Count, Q
+from django.db.models import  Q
 from datetime import datetime , timedelta
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -73,7 +73,7 @@ class ArticlePreview(AccessMixin, DetailView):
 
 
 class CategoryView(ListView):
-    paginate_by = 3 
+    paginate_by = 1
     # context_object_name = "categories"
     template_name = "blog/category.html"
     def get_queryset(self):
@@ -87,13 +87,25 @@ class AuthorView(ListView):
     template_name = "blog/author_list.html"
     def get_queryset(self):
         global author
-        self.author = self.kwargs["author"]
-        author = get_object_or_404(User,  username = self.author)
+        userename = self.kwargs["author"]
+        author = get_object_or_404(User,  username = userename)
         return author.articles.published()
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context["author"] =  author
     #     return context
+
+class SearchView(ListView):
+    paginate_by = 1
+    template_name = "blog/search_list.html"
+    def get_queryset(self):
+        global search
+        search = self.request.GET.get('q')#q is specified in the <input name='q'...
+        return Member.objects.published().filter(Q(description__icontains=search) | Q(title__icontains=search))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search"] =  search
+        return context
     
     
     

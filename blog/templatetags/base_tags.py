@@ -3,6 +3,7 @@ from ..models import Category, Settings, Category, Member
 from django.db.models import Count, Q
 from datetime import datetime , timedelta
 from django.contrib.contenttypes.models import ContentType
+from urllib.parse import urlencode
 register = template.Library()
 
 
@@ -52,3 +53,10 @@ def link(request, link_name, content, classes):
         "classes" : classes
     }
 
+
+#pagination tags
+@register.simple_tag
+def url_replace (request, field, value):
+    dict_ = request.GET.copy()
+    dict_[field] = value
+    return dict_.urlencode()
