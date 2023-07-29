@@ -21,6 +21,7 @@ from django.conf import settings  # new
 from accounts.views import Login, Register, activate
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("blog.urls")),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('register/',Register.as_view(), name="register" ),#Email comfirm
     path('comment/', include('comment.urls')), #django-comments-dab
     path('ratings/', include('star_ratings.urls', namespace='ratings')), #django-star-rating
+    path('', include('allauth.urls')),
     
 ]
 

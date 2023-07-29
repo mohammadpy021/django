@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from decouple import config
+from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+SITE_ID = 1
+SOCIALACCOUNT_LOGIN_ON_GET = True # remove the page "continue"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -38,15 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-        'crispy_forms',
-        'crispy_bootstrap4',
+    'django.contrib.sites', # Add this
+    'crispy_forms',
+    'crispy_bootstrap4',
     'django_jalali',
-   'blog',
-   'accounts',
-    'widget_tweaks',
+    'blog',
+    'accounts',
+    'widget_tweaks',#adding css class
     'comment', #django comments dab
-        'star_ratings',#django-star-rating
-        'bootstrap5', 
+    'star_ratings',#django-star-rating
+    'bootstrap5', 
+    'django.contrib.humanize',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google', # for Google OAuth 2.0
    
     
 ]
@@ -54,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django.middleware.locale.LocaleMiddleware',# CUSTOM
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -118,7 +126,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'fa-ir'
+LANGUAGES = (
+    ('fa', _('Persian')),
+    ('en', _('English')),
+)
+LANGUAGE_CODE = 'fa'
+
 
 TIME_ZONE = 'Asia/Tehran'
 
@@ -168,4 +181,28 @@ STAR_RATINGS_RATING_MODEL = 'blog.MyRating' #custom model
 STAR_RATINGS_STAR_HEIGHT=15
 editable=True
 # STAR_RATINGS_ANONYMOUS = True
+
+AUTHENTICATION_BACKENDS = [ #google login
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+# Additional configuration settings
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+
+
 

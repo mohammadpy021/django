@@ -116,11 +116,4 @@ def activate(request, uidb64, token):
         return HttpResponse('ایمیل شما تایید شد . اکنون میتوانید وارد شوید. <a href="/login" > ورود </a>')
     else:
         return HttpResponse('این لینک  فعال سازی منقضی شده است')
-
-
-
-
-
-        
-
- 
+    

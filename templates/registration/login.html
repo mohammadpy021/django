@@ -1,5 +1,9 @@
+
 {% load static %}
 {% load widget_tweaks %}
+{% load socialaccount %}
+{% load account %}
+{% user_display user %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,6 +98,16 @@
                             </button>
 						</div>
 					</div>
+					
+					
+							<a class="btn btn-success" 
+							style="text-align:center; display:block;" 
+							href="{% provider_login_url 'google' %}"
+							>ورود با گوگل
+							</a>
+					
+						
+					
 <a class="" style="text-align:center; display:block;" href ="{% url 'password_reset' %}" >
 	<span>رمز عبور خودرا فراموش کرده اید؟
 	</span>

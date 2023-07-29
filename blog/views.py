@@ -9,6 +9,7 @@ from django.views.generic.detail import DetailView
 from accounts.mixins import AccessMixin
 from django.db.models import  Q
 from datetime import datetime , timedelta
+from django.utils.translation import activate
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
@@ -26,6 +27,7 @@ def index(request):
 
 #return render(request, "blog/index.html", context)
 class ArticleListView(ListView):
+    activate("en")
     # model = Member
     queryset = Member.objects.published()
     # querys = Member.objects.published()\

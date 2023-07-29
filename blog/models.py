@@ -24,7 +24,7 @@ class ArticleManager(models.Manager):
     def active(self):
         return self.filter(status=True)
 class Category(models.Model):
-    parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, blank = True, null=True, verbose_name=" زیردسته", help_text="subcategory")
+    parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, blank = True, null=True, verbose_name=_(" زیردسته"), help_text="subcategory")
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
     position = models.IntegerField(verbose_name=_("پوزیشن"), default=1) 
@@ -37,7 +37,7 @@ class Category(models.Model):
         return self.title
     objects = ArticleManager()
 class IPAddress(models.Model):
-    ip_address = models.GenericIPAddressField(verbose_name = "آدرس آی پی " )
+    ip_address = models.GenericIPAddressField(verbose_name = _("آدرس آی پی ") )
     def __str__(self):
         return self.ip_address
 class Member(models.Model):# Articles
@@ -46,32 +46,31 @@ class Member(models.Model):# Articles
         ("D", "پیش نویس"),       # draft
         ("I", "درحال بررسی"),    # investigate
         ("B", "برگشت داده‌شده"),  # back
-
     ]
     title= models.CharField(max_length=255, verbose_name=_("عنوان"))
     description = models.TextField(blank=True, null=True, verbose_name=_("توضیحات"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
-    category = models.ManyToManyField(Category, verbose_name="دسته بندی ها", related_name='articles')
-    author = models.ForeignKey(User, verbose_name="نویسنده", on_delete=models.CASCADE, null=True, related_name='articles')
+    category = models.ManyToManyField(Category, verbose_name=_("دسته بندی ها"), related_name='articles')
+    author = models.ForeignKey(User, verbose_name=_("نویسنده"), on_delete=models.CASCADE, null=True, related_name='articles')
     # created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
     # updated_at = models.DateTimeField(auto_now=True)
-    created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
+    created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))#False: showing the calender
     updated_at = jmodels.jDateTimeField(auto_now=True)
     status = models.CharField(max_length=1, choices=STATUS, verbose_name=_("وضعیت"))
     photo = models.ImageField(upload_to="photo/", verbose_name=_("تصاویر"))
-    is_special = models.BooleanField(default=False, verbose_name= "مقاله ویژه" )
+    is_special = models.BooleanField(default=False, verbose_name= _("مقاله ویژه") )
     comments = GenericRelation(Comment)
-    hits = models.ManyToManyField(IPAddress,through="ArticleHit", blank=True, verbose_name="بازدید ها ", related_name='hits')
+    hits = models.ManyToManyField(IPAddress,through="ArticleHit", blank=True, verbose_name=_("بازدید ها "), related_name='hits')
     ratings = GenericRelation(MyRating)
     # ratings = GenericRelation(UserRating)
     class Meta:
-        verbose_name = "مقاله"
-        verbose_name_plural = "مقاله ها "
+        verbose_name = _("مقاله")
+        verbose_name_plural = _("مقاله ها ")
     def __str__(self):
         return self.title
     def get_categories(self):
         return  ",".join([i.title for i in self.category.filter(status=True)])
-    get_categories.short_description = "دسته بندی ها"
+    get_categories.short_description = _("دسته بندی ها")
     objects = ArticleManager()
     def get_absolute_url(self): # new
         return reverse('accounts:home')
@@ -79,8 +78,8 @@ class Member(models.Model):# Articles
 class Settings(models.Model):
     title= models.CharField(max_length=255, verbose_name=_("عنوان سایت "), help_text="عنوان سایت در قسمت navbar")
     class Meta:
-        verbose_name = "عنوان سایت"
-        verbose_name_plural = "عنوان سایت"
+        verbose_name = _("عنوان سایت")
+        verbose_name_plural = _("عنوان سایت")
     def __str__(self):
         return self.title
 
