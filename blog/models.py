@@ -51,7 +51,10 @@ class Member(models.Model):# Articles
     description = models.TextField(blank=True, null=True, verbose_name=_("توضیحات"))
     slug = models.SlugField(max_length=255, unique=True, default='', help_text=("آدرس slug"),verbose_name=_("نامک")) 
     category = models.ManyToManyField(Category, verbose_name=_("دسته بندی ها"), related_name='articles')
-    author = models.ForeignKey(User, verbose_name=_("نویسنده"), on_delete=models.CASCADE, null=True, related_name='articles')
+    author = models.ForeignKey(User,verbose_name=_("نویسنده"),on_delete=models.CASCADE,null=True,related_name='articles',
+                            #    limit_choices_to={'is_author': True}, # we used "formfield_for_foreignkey" in admin.py instead
+                               )
+    
     # created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))
     # updated_at = models.DateTimeField(auto_now=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name=_("تاریخ انتشار"))#False: showing the calender
@@ -70,6 +73,7 @@ class Member(models.Model):# Articles
         return self.title
     def get_categories(self):
         return  ",".join([i.title for i in self.category.filter(status=True)])
+
     get_categories.short_description = _("دسته بندی ها")
     objects = ArticleManager()
     def get_absolute_url(self): # new

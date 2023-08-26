@@ -2,6 +2,7 @@ from django.contrib import admin, messages
 from django.db import models
 from .models import Member, Category, Settings, IPAddress
 from django.utils.html import format_html
+from accounts.models import User
 @admin.action(description="تغییر حالت به انتشار")
 def make_published(modeladmin, request, queryset):
     updated  = queryset.update(status= "P")
@@ -53,8 +54,11 @@ class Category_Admin(admin.ModelAdmin):
 admin.site.register(Category, Category_Admin)
 
 
-class Admin(admin.ModelAdmin):
-   
+class Admin(admin.ModelAdmin): # Article_admin
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):#we can use "limit_choices_to={'is_author': True}" insteadd
+        if db_field.name == "author":
+            kwargs["queryset"] = User.objects.filter(is_author=True)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
     list_display = ['title', 'status','slug', 'author', 'thumbnail', 'get_categories']
     list_filter = ["status", "created_at"]
     search_fields = ["title", "description", ]
@@ -69,7 +73,6 @@ class Admin(admin.ModelAdmin):
     def thumbnail(self, obj):
         return format_html('<img src="{}" style="width: 130px; \
         height: 100px;border-radius: 10px;"/>'.format(obj.photo.url))
-
 
 
 

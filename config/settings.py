@@ -145,8 +145,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-
-STATICFILES_DIRS = [
+# STATIC_ROOT = BASE_DIR / "static" #For deploying - ./manage.py collectstatic
+STATICFILES_DIRS = [ #just for local
     BASE_DIR / "static",
 ]
 MEDIA_ROOT = BASE_DIR/'media'
